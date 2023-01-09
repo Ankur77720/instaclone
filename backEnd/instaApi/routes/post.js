@@ -24,7 +24,11 @@ var postSchema = mongoose.Schema({
     },
   ],
   caption: String,
-  post: String,
+  post: [
+    {
+      type: String,
+    },
+  ],
 })
 
 module.exports = mongoose.model('post', postSchema)

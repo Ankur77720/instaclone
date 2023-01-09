@@ -15,7 +15,7 @@ function isloggedIn(req, res, next) {
 
 /* GET home page. */
 router.get('/', isloggedIn, function (req, res, next) {
-  res.render('index', { title: 'Express' })
+  res.render('index')
 })
 // Register user
 router.get('/register', (req, res, next) => {
@@ -41,7 +41,7 @@ router.post(
       .then((result) => {
         passport.authenticate('local')(req, res, () => {
           //destination after user register
-          res.redirect('/')
+          res.send('lodumcchhh')
         })
       })
       .catch((err) => {
@@ -77,4 +77,27 @@ router.get('/logout', (req, res, next) => {
   }
 })
 // logout User
+
+//createPost
+router.post(
+  '/createPost',
+  isloggedIn,
+  multer.postUpload.array('image', 8),
+  async (req, res, next) => {
+    let currentUser = await user.findOne({
+      username: req.session.passport.user,
+    })
+    let newPost = await post.create({
+      owner: currentUser._id,
+      caption: req.body.caption,
+      post: req.files.map((elem) => elem.filename),
+    })
+
+    currentUser.posts.push(newPost._id)
+    await currentUser.save()
+    res.redirect('/')
+  },
+)
+//createPost
+
 module.exports = router
