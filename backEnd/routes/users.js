@@ -3,33 +3,18 @@ const passportLocalMongoose = require('passport-local-mongoose')
 mongoose
   .connect('mongodb://0.0.0.0/instagram')
   .then((result) => {
-    console.log('Connected to dataBase')
+    console.log('Connected to data base')
   })
   .catch((err) => {})
-
 var userSchema = mongoose.Schema({
   username: String,
   firstName: String,
   lastName: String,
-  profilePic: String,
+  dob: Date,
+  pic: String,
   email: String,
-  contactNumber: String,
-  address: String,
-  password: String,
-  followers: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'user',
-    },
-  ],
-  following: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'user',
-    },
-  ],
-
-  posts: [
+  contact: String,
+  post: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'post',
@@ -41,10 +26,22 @@ var userSchema = mongoose.Schema({
       ref: 'post',
     },
   ],
-  save: [
+  savedPost: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'post',
+    },
+  ],
+  followers: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+    },
+  ],
+  following: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
     },
   ],
 })

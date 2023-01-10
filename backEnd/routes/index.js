@@ -1,12 +1,12 @@
 var express = require('express')
 var router = express.Router()
-var post = require('./post')
-var user = require('./user')
-var comment = require('./comment')
+// var post = require('./post')
+var userModel = require('./users')
+// var comment = require('./comment')
 var passport = require('passport')
 var locaStrategy = require('passport-local')
 var multer = require('./multer')
-passport.use(new locaStrategy(user.authenticate()))
+passport.use(new locaStrategy(userModel.authenticate()))
 
 function isloggedIn(req, res, next) {
   if (req.isAuthenticated()) return next()
@@ -17,7 +17,7 @@ function isloggedIn(req, res, next) {
 router.get('/', isloggedIn, function (req, res, next) {
   res.render('index')
 })
-// Register user
+// Register userModel
 router.get('/register', (req, res, next) => {
   res.render('register')
 })
@@ -25,31 +25,32 @@ router.post(
   '/register',
   multer.userUpload.single('image'),
   (req, res, next) => {
-    var newUser = {
-      //user data here
+    let newUser = new userModel({
+      //userModel data here
       username: req.body.username,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      profilePic: req.file.filename,
+      pic: req.file.filename,
       email: req.body.email,
       contactNumber: req.body.contactNumber,
-      address: req.body.address,
-      //user data here
-    }
-    user
+      // address: req.body.address,
+      //userModel data here
+    })
+    userModel
       .register(newUser, req.body.password)
       .then((result) => {
         passport.authenticate('local')(req, res, () => {
-          //destination after user register
-          res.send('lodumcchhh')
+          //destination after userModel register
+          res.send(result)
         })
       })
       .catch((err) => {
+        console.log(err)
         res.send(err)
       })
   },
 )
-// Register user
+// Register userModel
 
 // Login User
 router.get('/login', (req, res, next) => {
@@ -84,8 +85,8 @@ router.post(
   isloggedIn,
   multer.postUpload.array('image', 8),
   async (req, res, next) => {
-    let currentUser = await user.findOne({
-      username: req.session.passport.user,
+    let currentUser = await userModel.findOne({
+      username: req.session.passport.userModel,
     })
     let newPost = await post.create({
       owner: currentUser._id,
