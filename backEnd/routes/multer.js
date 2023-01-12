@@ -13,7 +13,7 @@ function fileFilter(req, file, cb) {
 }
 const userStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/uploads/userUploads')
+    cb(null, '../frontEnd/instaui/public/uploads/userUploads')
   },
   filename: function (req, file, cb) {
     var fn = `${Date.now()}-${crypto
@@ -24,7 +24,7 @@ const userStorage = multer.diskStorage({
 })
 const postStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/uploads/postUploads')
+    cb(null, '../frontEnd/instaui/public/uploads/postUploads')
   },
   filename: function (req, file, cb) {
     var fn = `${Date.now()}-${crypto

@@ -1,0 +1,75 @@
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#main {
+  height: 100vh;
+  width: 100vw;
+}
+#root {
+  height: 100vh;
+  width: 100vw;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: initial;
+}
+/* Auth form */
+.sides {
+  width: 30vw;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+/* Auth form */
+
+/* Home */
+.sidebar {
+  width: 20vw;
+}
+.userSection {
+  height: 30%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.364);
+}
+.userSection .avatar > * {
+  height: 13vh;
+  width: 13vh;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.562);
+  border-radius: 50%;
+}
+
+.navigation button {
+  padding-left: 2vw;
+}
+.navigation button h5 {
+  color: rgba(255, 255, 255, 0.765);
+  font-weight: 400;
+}
+.navigation button > *:not(h5) {
+  height: 3vh;
+  width: 3vh;
+  object-fit: contain;
+}
+.feed {
+  width: 60vw;
+}
+.activity {
+  width: 20vw;
+  background-color: rgb(242, 242, 242);
+  border-left: 1px solid black;
+}
+/* Home */

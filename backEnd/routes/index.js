@@ -1,8 +1,8 @@
 var express = require('express')
 var router = express.Router()
-// var post = require('./post')
+var post = require('./post')
 var userModel = require('./users')
-// var comment = require('./comment')
+var comment = require('./comment')
 var passport = require('passport')
 var locaStrategy = require('passport-local')
 var multer = require('./multer')
@@ -10,7 +10,11 @@ passport.use(new locaStrategy(userModel.authenticate()))
 
 function isloggedIn(req, res, next) {
   if (req.isAuthenticated()) return next()
-  else res.redirect('/login')
+  else
+    res.json({
+      status: 200,
+      message: 'you are not logged in',
+    })
 }
 
 /* GET home page. */
@@ -33,7 +37,6 @@ router.post(
       pic: req.file.filename,
       email: req.body.email,
       contactNumber: req.body.contactNumber,
-      // address: req.body.address,
       //userModel data here
     })
     userModel
@@ -58,12 +61,24 @@ router.get('/login', (req, res, next) => {
 })
 router.post(
   '/login',
+  (req, res, next) => {
+    console.log(req.body)
+    return next()
+  },
   passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
+    successRedirect: '/loginSuccess',
+    failureRedirect: '/loginFail',
   }),
   (req, res, next) => {},
 )
+router.get('/loginFail', (req, res, next) => {
+  console.log(req.body)
+  res.json({ status: 200, message: 'Not valid credential' })
+})
+router.get('/loginSuccess', (req, res, next) => {
+  console.log(req.body)
+  res.json({ status: 200, message: 'Login success' })
+})
 // Login User
 
 // logout Use
@@ -78,6 +93,15 @@ router.get('/logout', (req, res, next) => {
   }
 })
 // logout User
+
+// userData
+router.get('/userData', isloggedIn, async (req, res, next) => {
+  let userData = await userModel.findOne({
+    username: req.session.passport.user,
+  })
+  res.json(userData)
+})
+// userData
 
 //createPost
 router.post(
