@@ -1,18 +1,21 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Input from '../../components/input/input'
 
 const Form = () => {
-  const [isLogged, setLoggedIn] = useState(true)
+  const navigate = useNavigate()
+  const isLogged = window.location.pathname.includes('SignIn')
   return (
     <>
       {isLogged ? (
         <>
-          <h1 className='m-0' >Welcome back</h1> <p className="m-0">Login to your account</p>
+          <h1 className="m-0">Welcome back</h1>{' '}
+          <p className="m-0">Login to your account</p>
         </>
       ) : (
         <>
-          <h1 className='m-0'>Welcome</h1>
-          <p className='m-0' >register new account</p>
+          <h1 className="m-0">Welcome !</h1>
+          <p className="m-0">register new account</p>
         </>
       )}
       <div className="sides">
@@ -39,11 +42,17 @@ const Form = () => {
           placeholder="Password"
           label="Enter your password"
         />
-        <Input type="submit" id="input2" value="Log In" />
+        {isLogged ? (
+          <Input type="submit" id="input2" value="Log In" />
+        ) : (
+          <Input type="submit" id="input2" value="Create Account" />
+        )}
         <span className="d-flex  justify-content-center align-items-center ">
           {isLogged ? `Don't have account ?` : `alrady have an account ?`}
           <span
-            onClick={() => setLoggedIn(!isLogged)}
+            onClick={() => {
+              isLogged ? navigate('/SignUp') : navigate('/SignIn')
+            }}
             className="btn btn-link p-0 text-dark"
           >
             {' '}
