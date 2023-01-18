@@ -1,18 +1,25 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from '../Authorization/auth'
 import Home from '../home/home'
+
 const RouterJsx = () => {
   const pages = [
     {
       id: 1,
-      path: '/',
+      path: '/home',
       name: 'home',
       component: <Home />,
     },
     {
       id: 2,
       path: '/SignIn',
+      name: 'SignIn',
+      component: <Auth />,
+    },
+    {
+      id: 2,
+      path: '/',
       name: 'SignIn',
       component: <Auth />,
     },
@@ -26,7 +33,7 @@ const RouterJsx = () => {
   return (
     <Routes>
       {pages.map(({ id, path, component, name }) => {
-        return <Route path={path} element={component} id={id} />
+        return <Route path={path} element={component} key={id} />
       })}
     </Routes>
   )

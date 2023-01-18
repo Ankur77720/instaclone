@@ -7,6 +7,7 @@ const Input = ({
   type = 'inputType',
   placeholder = '',
   value = '',
+  onChange = () => {},
 }) => {
   return (
     <>
@@ -24,6 +25,7 @@ const Input = ({
             id={id}
             name={name}
             value={value}
+            onChange={onChange}
           />
         ) : (
           <input
@@ -33,6 +35,7 @@ const Input = ({
             id={id}
             name={name}
             value={value}
+            onChange={onChange}
           />
         )}
       </div>

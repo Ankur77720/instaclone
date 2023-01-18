@@ -12,7 +12,7 @@ function isloggedIn(req, res, next) {
   if (req.isAuthenticated()) return next()
   else
     res.json({
-      status: 200,
+      status: 401,
       message: 'you are not logged in',
     })
 }
@@ -25,35 +25,34 @@ router.get('/', isloggedIn, function (req, res, next) {
 router.get('/register', (req, res, next) => {
   res.render('register')
 })
-router.post(
-  '/register',
-  multer.userUpload.single('image'),
-  (req, res, next) => {
-    let newUser = new userModel({
-      //userModel data here
-      username: req.body.username,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      pic: req.file.filename,
-      email: req.body.email,
-      contactNumber: req.body.contactNumber,
-      //userModel data here
+router.post('/register', (req, res, next) => {
+  let newUser = new userModel({
+    //userModel data here
+    username: req.body.username,
+    email: req.body.email,
+    //userModel data here
+  })
+  userModel
+    .register(newUser, req.body.password)
+    .then((result) => {
+      passport.authenticate('local')(req, res, () => {
+        res.status(201).send(result)
+      })
     })
-    userModel
-      .register(newUser, req.body.password)
-      .then((result) => {
-        passport.authenticate('local')(req, res, () => {
-          //destination after userModel register
-          res.send(result)
-        })
-      })
-      .catch((err) => {
-        console.log(err)
-        res.send(err)
-      })
-  },
-)
+    .catch((err) => {
+      console.log(err)
+      res.send(err)
+    })
+})
 // Register userModel
+
+// user data
+router.get('/userData', isloggedIn, async (req, res, next) => {
+  delete req.hash
+  delete req.salt
+  res.send(req.user)
+})
+// user data
 
 // Login User
 router.get('/login', (req, res, next) => {
@@ -62,7 +61,6 @@ router.get('/login', (req, res, next) => {
 router.post(
   '/login',
   (req, res, next) => {
-    console.log(req.body)
     return next()
   },
   passport.authenticate('local', {
@@ -72,11 +70,9 @@ router.post(
   (req, res, next) => {},
 )
 router.get('/loginFail', (req, res, next) => {
-  console.log(req.body)
-  res.json({ status: 200, message: 'Not valid credential' })
+  res.json({ status: 401, message: 'Not valid credential' })
 })
 router.get('/loginSuccess', (req, res, next) => {
-  console.log(req.body)
   res.json({ status: 200, message: 'Login success' })
 })
 // Login User
@@ -95,10 +91,12 @@ router.get('/logout', (req, res, next) => {
 // logout User
 
 // userData
-router.get('/userData', isloggedIn, async (req, res, next) => {
+router.post('/userData', isloggedIn, async (req, res, next) => {
   let userData = await userModel.findOne({
     username: req.session.passport.user,
   })
+  console.log('userData', userData)
+  console.log(userData)
   res.json(userData)
 })
 // userData

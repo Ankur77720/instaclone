@@ -1,41 +1,58 @@
+import './home.css'
 import React from 'react'
 
 import { ReactComponent as Avatar } from '../../assets/avatar.svg'
+import { ReactComponent as Logout } from '../../assets/logout.svg'
 import { ReactComponent as HomeIcon } from '../../assets/home.svg'
 import { ReactComponent as ExploreIcon } from '../../assets/explore.svg'
-import { ReactComponent as GridIcon } from '../../assets/grid.svg'
 import { ReactComponent as BookMarkIcon } from '../../assets/bookmark.svg'
 import { ReactComponent as SettingsIcon } from '../../assets/settings.svg'
 import { ReactComponent as ShareIcon } from '../../assets/share.svg'
-import { ReactComponent as Logout } from '../../assets/logout.svg'
+import { ReactComponent as GridIcon } from '../../assets/grid.svg'
 import { ReactComponent as Search } from '../../assets/search.svg'
 import { ReactComponent as Add } from '../../assets/add.svg'
+import { useNavigate } from 'react-router-dom'
 import Post from '../../components/post/post'
-
-const Home = () => {
+import { useState } from 'react'
+import { useEffect } from 'react'
+const axios = require('axios')
+function Home() {
+  var [userData, setUserData] = useState({})
+  userData.post = []
+  userData.following = []
+  userData.followers = []
+  useEffect(() => {
+    setUserData(async () => {
+      let userData = await fetch('http://localhost:8000/userData')
+      userData = await userData.json()
+      return userData
+    })
+  }, [])
   return (
     <>
       <div className="d-flex h-100" id="home">
         <div className="sidebar bg-dark">
-          <div className="userSection d-flex flex-column justify-content-center align-items-center">
-            <div className="mb-4 avatar">
-              <Avatar />
+          {userData && (
+            <div className="userSection d-flex flex-column justify-content-center align-items-center">
+              <div className="mb-4 avatar">
+                <Avatar />
+              </div>
+              <div className="w-100 userCount text-light d-flex justify-content-around align-items-center text-center">
+                <div>
+                  <h5 className="m-0 p-0">{userData.following.length}</h5>
+                  <p className="m-0 p-0">Following</p>
+                </div>
+                <div>
+                  <h5 className="m-0 p-0">{userData.post.length}</h5>
+                  <p className="m-0 p-0">Post</p>
+                </div>
+                <div>
+                  <h5 className="m-0 p-0">{userData.followers.length}</h5>
+                  <p className="m-0 p-0">Followers</p>
+                </div>
+              </div>
             </div>
-            <div className="w-100 userCount text-light d-flex justify-content-around align-items-center text-center">
-              <div>
-                <h5 className="m-0 p-0">1000</h5>
-                <p className="m-0 p-0">Following</p>
-              </div>
-              <div>
-                <h5 className="m-0 p-0">1000</h5>
-                <p className="m-0 p-0">Post</p>
-              </div>
-              <div>
-                <h5 className="m-0 p-0">1000</h5>
-                <p className="m-0 p-0">Followers</p>
-              </div>
-            </div>
-          </div>
+          )}
           <div className="navigation py-3 w-100 d-flex flex-column justify-content-around align-items-start">
             <button className="d-flex justify-content-start align-items-center gap-3 mb-3 w-100 btn text-light ">
               <HomeIcon />
@@ -69,7 +86,7 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div className="feed pt-4 d-flex flex-column justify-content-start align-items-center">
+        <div className="feed d-flex flex-column justify-content-start align-items-center">
           <div className="topBar d-flex p-2 py-3 w-100 justify-content-between gap-5 align-items-center">
             <div className="search w-25 h-100 d-flex justify-content-center align-items-center ">
               <input
@@ -80,7 +97,7 @@ const Home = () => {
                   borderBottomLeftRadius: '1rem',
                   borderTopRightRadius: '0px',
                   borderBottomRightRadius: '0px',
-                  marginLeft:'5rem'
+                  marginLeft: '5rem',
                 }}
                 type="text"
                 placeholder="Enter your Search"
