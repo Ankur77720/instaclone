@@ -1,9 +1,0 @@
-.feed {
-  overflow-y: scroll;
-}
-.feed::-webkit-scrollbar {
-  display: none;
-}
-.topBar {
-  top: 0%;
-}
