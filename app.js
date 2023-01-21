@@ -3,13 +3,31 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
-
+var usersRouter = require('./routes/models/users')
+const passport = require('passport')
+const expressSession = require('express-session')
+const localStrategy = require('passport-local')
 var indexRouter = require('./routes/index')
 var app = express()
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
+
+// passport
+passport.use(new localStrategy(usersRouter.authenticate()))
+app.use(
+  expressSession({
+    resave: false,
+    saveUninitialized: false,
+    secret: 'sara rasra',
+  }),
+)
+app.use(passport.initialize())
+app.use(passport.session())
+passport.serializeUser(usersRouter.serializeUser())
+passport.deserializeUser(usersRouter.deserializeUser())
+// passport
 
 app.use(logger('dev'))
 app.use(express.json())

@@ -28,6 +28,10 @@ let userSchema = mongoose.Schema({
     type: String,
     require: true,
   },
+  dob: {
+    type: Date,
+    require: true,
+  },
   lastName: {
     type: String,
     require: true,

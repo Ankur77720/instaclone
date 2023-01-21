@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../stylesheets/form.css" />
+  </head>
+  <body>
+    <div id="main">
+      <div class="formBac">
+        <form
+          action="/register"
+          class="form col-12 px-4 d-flex flex-column justify-content-center align-items-start"
+        >
+          <span class="mb-4" style="font-size: 2rem; font-weight: 300"
+            >Register new account</span
+          >
+          <div class="row name">
+            <div class="mb-3 col-6">
+              <label for="firstName" class="form-label">Enter First Name</label>
+              <input
+                name="firstName"
+                type="text"
+                id="firstName"
+                class="form-control"
+                placeholder="Example Ankur "
+              />
+            </div>
+            <div class="mb-3 col-6">
+              <label for="lastName" class="form-label">Enter Last Name</label>
+              <input
+                name="lastName"
+                type="text"
+                id="lastName"
+                class="form-control"
+                placeholder="Example Prajapati"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3 col-8">
+              <label for="username" class="form-label">Enter username</label>
+              <input
+                name="username"
+                type="text"
+                id="username"
+                class="form-control"
+                placeholder="Example @ankur "
+              />
+            </div>
+            <div class="mb-3 col-4">
+              <label for="username" class="form-label"
+                >Enter Date of Birth</label
+              >
+              <input name="dob" type="date" id="dob" class="form-control" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="mb-3">
+              <label for="pic" class="form-label"
+                >Select your profile pic</label
+              >
+              <input
+                name="pic"
+                type="file"
+                id="pic"
+                class="form-control"
+                placeholder="Example Ankur "
+              />
+            </div>
+          </div>
+          <div class="row align-items-end">
+            <div class="mb-3 col-7">
+              <label for="password" class="form-label"
+                >Enter your password</label
+              >
+              <input
+                name="password"
+                type="password"
+                id="password"
+                class="form-control"
+                placeholder="********************** "
+              />
+            </div>
+            <div class="mb-3 col-5">
+              <input
+                type="submit"
+                class="btn btn-outline-success w-100"
+                value="create account"
+              />
+            </div>
+          </div>
+          <div class="mb-3">
+            <span
+              >Already have an account ?
+              <a
+                class="px-1"
+                style="opacity: 0.75; color: rgb(255, 255, 255)"
+                href="/login"
+                >Click here</a
+              ></span
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
