@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Auth from '../Authorization/auth'
+import PostForm from '../createPost/postForm'
 import Home from '../home/home'
 
 const RouterJsx = () => {
@@ -28,6 +29,12 @@ const RouterJsx = () => {
       path: '/SignUp',
       name: 'SignUp',
       component: <Auth />,
+    },
+    {
+      id: 4,
+      path: '/createPost',
+      name: 'createPost',
+      component: <PostForm />,
     },
   ]
   return (

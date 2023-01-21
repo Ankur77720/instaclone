@@ -23,7 +23,7 @@ const Form = () => {
             username: username,
             password: password,
           })
-      if (res != 401 && res !== 500) {
+      if (res.data.status === 201) {
         navigate('/home')
       } else {
         setError(`${res.data.message}`)

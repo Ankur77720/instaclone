@@ -9,6 +9,7 @@ var multer = require('./multer')
 passport.use(new locaStrategy(userModel.authenticate()))
 
 function isloggedIn(req, res, next) {
+  console.log(req.body)
   if (req.isAuthenticated()) return next()
   else
     res.json({
@@ -73,7 +74,7 @@ router.get('/loginFail', (req, res, next) => {
   res.json({ status: 401, message: 'Not valid credential' })
 })
 router.get('/loginSuccess', (req, res, next) => {
-  res.json({ status: 200, message: 'Login success' })
+  res.json({ status: 201, message: 'Login success' })
 })
 // Login User
 
@@ -118,7 +119,8 @@ router.post(
 
     currentUser.posts.push(newPost._id)
     await currentUser.save()
-    res.redirect('/')
+    console.log(newPost)
+    res.send(newPost)
   },
 )
 //createPost

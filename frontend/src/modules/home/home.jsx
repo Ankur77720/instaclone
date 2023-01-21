@@ -17,6 +17,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 const axios = require('axios')
 function Home() {
+  const navigate = useNavigate()
   var [userData, setUserData] = useState({})
   userData.post = []
   userData.following = []
@@ -115,7 +116,12 @@ function Home() {
                 <Search />
               </div>
             </div>
-            <button className="bg-danger d-flex justify-content-start align-items-center gap-3 btn text-light ">
+            <button
+              onClick={() => {
+                navigate('/createPost')
+              }}
+              className="bg-danger d-flex justify-content-start align-items-center gap-3 btn text-light "
+            >
               <Add />
               <p>Create new post</p>
             </button>

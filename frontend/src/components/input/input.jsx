@@ -4,7 +4,7 @@ const Input = ({
   name = '',
   id = 'InputId',
   label = '',
-  type = 'inputType',
+  type = 'text',
   placeholder = '',
   value = '',
   onChange = () => {},

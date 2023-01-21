@@ -23,6 +23,20 @@ var postSchema = mongoose.Schema({
       ref: 'user',
     },
   ],
+  tags: [
+    {
+      type: String,
+    },
+  ],
+  tagPersons: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: 'user',
+    },
+  ],
+
+  location: String,
+
   caption: String,
   post: [
     {
