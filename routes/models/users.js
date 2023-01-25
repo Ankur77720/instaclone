@@ -14,7 +14,7 @@ let userSchema = mongoose.Schema({
       ref: 'post',
     },
   ],
-  save: [
+  bookMarked: [
     {
       type: mongoose.Types.ObjectId,
       ref: 'post',

@@ -1,11 +1,13 @@
 var express = require('express')
 var router = express.Router()
 var db = require('./db/mongoose')
-var userModel = require('./models/users')
+var user = require('./models/users')
 var postModel = require('./models/post')
 var commentModel = require('./models/comment')
+const localStrategy = require('passport-local')
 const { userUpload, postUpload } = require('./fileHandling/multer')
 const passport = require('passport')
+passport.use(new localStrategy(user.authenticate()))
 
 // isloggedIN
 function isloggedIn(req, res, next) {
@@ -23,6 +25,7 @@ router.get('/', function (req, res, next) {
 
 // Register user
 router.post('/register', userUpload.single('pic'), (req, res, next) => {
+  console.log(req.body)
   var newUser = {
     //user data here
     username: req.body.username,
@@ -47,6 +50,9 @@ router.post('/register', userUpload.single('pic'), (req, res, next) => {
 // Register user
 
 // Login user
+router.get('/login', (req, res, next) => {
+  res.render('login')
+})
 router.post(
   '/login',
   passport.authenticate('local', {
@@ -69,5 +75,11 @@ router.get('/logout', (req, res, next) => {
   }
 })
 // logout user
+
+// profile
+router.get('/profile', isloggedIn, (req, res, next) => {
+  res.render('profile', { userData: req.user })
+})
+// profile
 
 module.exports = router

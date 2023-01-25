@@ -1,0 +1,32 @@
+.profileBac {
+  height: 30vh;
+  width: 100%;
+  background-image: linear-gradient(90deg, rgb(209, 209, 94), pink);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.userData {
+  height: 40vh;
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  position: relative;
+}
+.avatar {
+  position: absolute;
+  top: -25%;
+  left: 1.5%;
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar img {
+  border-radius: 50%;
+  height: 92%;
+  width: 92%;
+  object-fit: cover;
+}

@@ -13,102 +13,121 @@
     <link rel="stylesheet" href="../stylesheets/form.css" />
   </head>
   <body>
-    <div id="main">
+    <div id="main h-100 w-100 d-flex">
+      <div class="w-50 h-100 dummy"></div>
       <div class="formBac">
-        <form
-          action="/register"
-          class="form col-12 px-4 d-flex flex-column justify-content-center align-items-start"
-        >
-          <span class="mb-4" style="font-size: 2rem; font-weight: 300"
-            >Register new account</span
+        <div class="rounded-5 overflow-hidden mx-1 formCover">
+          <form
+            method="post"
+            enctype="multipart/form-data"
+            action="/register"
+            class="form col-12 p-4 d-flex flex-column justify-content-center align-items-start"
           >
-          <div class="row name">
-            <div class="mb-3 col-6">
-              <label for="firstName" class="form-label">Enter First Name</label>
-              <input
-                name="firstName"
-                type="text"
-                id="firstName"
-                class="form-control"
-                placeholder="Example Ankur "
-              />
-            </div>
-            <div class="mb-3 col-6">
-              <label for="lastName" class="form-label">Enter Last Name</label>
-              <input
-                name="lastName"
-                type="text"
-                id="lastName"
-                class="form-control"
-                placeholder="Example Prajapati"
-              />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3 col-8">
-              <label for="username" class="form-label">Enter username</label>
-              <input
-                name="username"
-                type="text"
-                id="username"
-                class="form-control"
-                placeholder="Example @ankur "
-              />
-            </div>
-            <div class="mb-3 col-4">
-              <label for="username" class="form-label"
-                >Enter Date of Birth</label
-              >
-              <input name="dob" type="date" id="dob" class="form-control" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="mb-3">
-              <label for="pic" class="form-label"
-                >Select your profile pic</label
-              >
-              <input
-                name="pic"
-                type="file"
-                id="pic"
-                class="form-control"
-                placeholder="Example Ankur "
-              />
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="mb-3 col-7">
-              <label for="password" class="form-label"
-                >Enter your password</label
-              >
-              <input
-                name="password"
-                type="password"
-                id="password"
-                class="form-control"
-                placeholder="********************** "
-              />
-            </div>
-            <div class="mb-3 col-5">
-              <input
-                type="submit"
-                class="btn btn-outline-success w-100"
-                value="create account"
-              />
-            </div>
-          </div>
-          <div class="mb-3">
-            <span
-              >Already have an account ?
-              <a
-                class="px-1"
-                style="opacity: 0.75; color: rgb(255, 255, 255)"
-                href="/login"
-                >Click here</a
-              ></span
+            <span class="mb-4" style="font-size: 2rem; font-weight: 300"
+              >Register new account</span
             >
-          </div>
-        </form>
+            <div class="row name">
+              <div class="mb-3 col-6">
+                <label for="firstName" class="form-label"
+                  >Enter First Name</label
+                >
+                <input
+                  required
+                  name="firstName"
+                  type="text"
+                  id="firstName"
+                  class="form-control"
+                  placeholder="Example Ankur "
+                />
+              </div>
+              <div class="mb-3 col-6">
+                <label for="lastName" class="form-label">Enter Last Name</label>
+                <input
+                  required
+                  name="lastName"
+                  type="text"
+                  id="lastName"
+                  class="form-control"
+                  placeholder="Example Prajapati"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-8">
+                <label for="username" class="form-label">Enter username</label>
+                <input
+                  required
+                  name="username"
+                  type="text"
+                  id="username"
+                  class="form-control"
+                  placeholder="Example @ankur "
+                />
+              </div>
+              <div class="mb-3 col-4">
+                <label for="username" class="form-label"
+                  >Enter Date of Birth</label
+                >
+                <input
+                  required
+                  name="dob"
+                  type="date"
+                  id="dob"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3">
+                <label for="pic" class="form-label"
+                  >Select your profile pic</label
+                >
+                <input
+                  required
+                  name="pic"
+                  type="file"
+                  id="pic"
+                  class="form-control"
+                  placeholder="Example Ankur "
+                />
+              </div>
+            </div>
+            <div class="row align-items-end">
+              <div class="mb-3 col-7">
+                <label for="password" class="form-label"
+                  >Enter your password</label
+                >
+                <input
+                  required
+                  name="password"
+                  type="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="********************** "
+                />
+              </div>
+              <div class="mb-3 col-5">
+                <input
+                  required
+                  type="submit"
+                  class="btn btn-outline-success w-100"
+                  value="create account"
+                />
+              </div>
+            </div>
+            <div class="mb-3">
+              <span
+                >Already have an account ?
+                <a
+                  class="px-1"
+                  style="opacity: 0.75; color: rgb(255, 255, 255)"
+                  href="/login"
+                  >Login here</a
+                ></span
+              >
+            </div>
+          </form>
+        </div>
       </div>
     </div>
     <script

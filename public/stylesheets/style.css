@@ -1,8 +1,26 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+:root {
+  --primary: white;
 }
-
-a {
-  color: #00B7FF;
+* {
+  margin: 0%;
+  padding: 0%;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+.navbar {
+  width: 100vw;
+  top: 0%;
+  position: fixed;
+  border-radius: 5px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.251);
+}
+.navbar li a,
+.navbar * {
+  color: var(--primary) !important;
 }

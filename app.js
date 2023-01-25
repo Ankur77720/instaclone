@@ -6,7 +6,6 @@ var logger = require('morgan')
 var usersRouter = require('./routes/models/users')
 const passport = require('passport')
 const expressSession = require('express-session')
-const localStrategy = require('passport-local')
 var indexRouter = require('./routes/index')
 var app = express()
 
@@ -15,7 +14,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 // passport
-passport.use(new localStrategy(usersRouter.authenticate()))
 app.use(
   expressSession({
     resave: false,

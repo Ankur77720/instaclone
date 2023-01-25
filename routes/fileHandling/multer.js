@@ -6,14 +6,14 @@ const fileFilter = (req, file, cb) => {
   var fileType = file.mimetype
   fileType = fileType.split('/')
   fileType = fileType[0]
-  if (fileType === 'image') {
+  if (fileType == 'image') {
     return cb(null, true)
   }
   return cb(new Error('File is not a ImageType'))
 }
 const userStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/images/uploads/userUploads')
+    cb(null, './public/uploads/userUploads')
   },
   filename: function (req, file, cb) {
     const fn = `${Date.now()}-${crypto
@@ -24,7 +24,7 @@ const userStorage = multer.diskStorage({
 })
 const postStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './public/images/uploads/postUploads')
+    cb(null, './public/uploads/postUploads')
   },
   filename: function (req, file, cb) {
     const fn = `${Date.now()}-${crypto

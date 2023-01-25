@@ -34,22 +34,24 @@ input[type="color"]:focus,
   height: 100vh;
   width: 100vw;
 }
+#main .dummy {
+  height: 100vh;
+}
 .formBac {
   height: 100vh;
-  width: 100vw;
-  background-image: url("../images/singUp.avif");
+  width: 50%;
+  background-image: url("../images/singUp.webp");
   background-size: cover;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
 }
 form {
   height: 100%;
   background-image: linear-gradient(
     90deg,
-    rgba(0, 0, 0, 0.641),
-    rgba(0, 0, 0, 0.261),
-    transparent
+    rgba(76, 76, 76, 0.17),
+    rgba(40, 40, 40, 0.17)
   );
 }
 form > .row {
@@ -77,10 +79,23 @@ form label {
   margin-bottom: 0.25rem !important;
 }
 form input {
-  background-color: transparent !important ;
+  background-color: rgba(0, 0, 0, 0.264) !important ;
   -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   color: white !important;
+}
+form input::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+/* .row {
+  display: grid;
+  grid-template-columns: repeat(2, min(1fr, 300px));
+} */
+.formCover {
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  width: max(40vh, 600px);
+  border: 1px solid rgba(255, 255, 255, 0.404);
 }
 form input[type="submit"] {
   text-transform: capitalize;
