@@ -1,5 +1,14 @@
+html::-webkit-scrollbar {
+  width: 0.5vw !important;
+}
+html::-webkit-scrollbar-thumb {
+  width: 0.5vw !important;
+  background-color: rgba(0, 0, 0, 0.596);
+  border-radius: 10px;
+}
+
 :root {
-  --primary: white;
+  --primary: rgb(239, 239, 239);
 }
 * {
   margin: 0%;
@@ -15,7 +24,8 @@ body {
   width: 100vw;
   top: 0%;
   position: fixed;
-  border-radius: 5px;
+  z-index: 9999;
+  /* border-radius: 5px; */
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.251);
@@ -23,4 +33,29 @@ body {
 .navbar li a,
 .navbar * {
   color: var(--primary) !important;
+}
+.collapse:not(.show) {
+  display: flex !important;
+}
+.navbar-toggler {
+  display: none;
+}
+
+@media screen and (width>500px) {
+  #main {
+    padding-right: 3.5rem;
+  }
+}
+@media screen and (width<500px) {
+  .navbar {
+    transform: translate(0%, 0%) rotate(0deg) !important;
+  }
+  .navbar .container-fluid {
+    flex-flow: initial !important;
+    justify-content: start !important;
+    gap: 1rem;
+  }
+  .navbar ul li {
+    rotate: 00deg !important;
+  }
 }

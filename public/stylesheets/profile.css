@@ -1,21 +1,10 @@
-.profileBac {
-  height: 30vh;
-  width: 100%;
-  background-image: linear-gradient(90deg, rgb(209, 209, 94), pink);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-.userData {
-  height: 40vh;
-  width: 100%;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  position: relative;
+.userInfo {
+  height: 100vh;
+  width: 25vw;
+  position: fixed;
+  z-index: 9;
 }
 .avatar {
-  position: absolute;
-  top: -25%;
-  left: 1.5%;
   height: 7rem;
   width: 7rem;
   border-radius: 50%;
@@ -29,4 +18,32 @@
   height: 92%;
   width: 92%;
   object-fit: cover;
+}
+.profileBac {
+  height: 20vh;
+  width: 75%;
+  float: right;
+  background-image: linear-gradient(90deg, rgb(209, 209, 94), pink);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.userData {
+  margin-left: 25vw;
+  width: 75%;
+  position: relative;
+}
+.post > div {
+  display: flex;
+  columns: auto;
+  gap: 1rem;
+  padding: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.post img {
+  max-width: 21vw;
+  min-width: 300px;
+  object-fit: cover;
+  box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.551);
+  cursor: pointer;
 }

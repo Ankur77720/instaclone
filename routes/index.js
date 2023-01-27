@@ -20,47 +20,58 @@ function isloggedIn(req, res, next) {
 // models are created
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('form', { title: 'Express' })
+  res.locals.error = ''
+  res.render('form')
 })
 
 // Register user
 router.post('/register', userUpload.single('pic'), (req, res, next) => {
-  console.log(req.body)
-  var newUser = {
-    //user data here
-    username: req.body.username,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    dob: req.body.dob,
-    pic: req.file.filename,
-    //user data here
-  }
-  user
-    .register(newUser, req.body.password)
-    .then((result) => {
-      passport.authenticate('local')(req, res, () => {
-        //destination after user register
-        res.redirect('/profile')
+  try {
+    var newUser = {
+      //user data here
+      username: req.body.username,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      dob: req.body.dob,
+      pic: req.file.filename,
+      //user data here
+    }
+    user
+      .register(newUser, req.body.password)
+      .then((result) => {
+        passport.authenticate('local')(req, res, () => {
+          //destination after user register
+          res.redirect('/profile')
+        })
       })
-    })
-    .catch((err) => {
-      res.send(err)
-    })
+      .catch((err) => {
+        res.locals.error = `${err.message}!`
+        res.render('form')
+      })
+  } catch (err) {
+    res.locals.error = `${err.message}!`
+    res.render('form')
+  }
 })
 // Register user
 
 // Login user
 router.get('/login', (req, res, next) => {
+  res.locals.error = ''
   res.render('login')
 })
 router.post(
   '/login',
   passport.authenticate('local', {
     successRedirect: '/profile',
-    failureRedirect: '/login',
+    failureRedirect: '/loginFail',
   }),
   (req, res, next) => {},
 )
+router.get('/loginFail', (req, res, next) => {
+  res.locals.error = 'Credentials not Valid !'
+  res.render('login')
+})
 // Login user
 
 // logout user

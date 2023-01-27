@@ -31,22 +31,20 @@ input[type="color"]:focus,
   outline: 0 none;
 }
 #main {
-  height: 100vh;
-  width: 100vw;
-}
-#main .dummy {
-  height: 100vh;
+  display: flex;
 }
 .formBac {
   height: 100vh;
-  width: 50%;
+  width: 100%;
   background-image: url("../images/singUp.webp");
   background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 form {
+  filter: brightness(1.5);
   height: 100%;
   background-image: linear-gradient(
     90deg,

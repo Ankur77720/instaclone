@@ -13,8 +13,7 @@
     <link rel="stylesheet" href="../stylesheets/form.css" />
   </head>
   <body>
-    <div id="main h-100 w-100 d-flex">
-      <div class="w-50 h-100 dummy"></div>
+    <div id="main">
       <div class="formBac">
         <div class="rounded-5 overflow-hidden mx-1 formCover">
           <form
@@ -26,6 +25,7 @@
             <span class="mb-4" style="font-size: 2rem; font-weight: 300"
               >Register new account</span
             >
+            <h6 class="text-danger text-capitalize mb-2"> <%= error %> </h6>
             <div class="row name">
               <div class="mb-3 col-6">
                 <label for="firstName" class="form-label"

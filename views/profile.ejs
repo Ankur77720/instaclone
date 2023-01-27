@@ -3,20 +3,130 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>profile</title>
+    <title>Bootstrap demo</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    /><link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../stylesheets/style.css" />
     <link rel="stylesheet" href="../stylesheets/profile.css" />
   </head>
   <body>
+    <style>
+      .navbar {
+        right: 0%;
+        width: 100vh;
+        transform: translate(0%, -100%) rotate(-90deg);
+        transform-origin: right bottom;
+      }
+      .navbar .container-fluid {
+        flex-flow: row-reverse;
+        justify-content: end;
+        gap: 3rem;
+      }
+      .navbar-expand-lg .navbar-nav {
+        width: 100%;
+        justify-content: end;
+      }
+      .navbar ul {
+        gap: 1.5rem;
+      }
+      .navbar ul li {
+        rotate: 90deg;
+        font-size: 23px;
+        line-height: 3vh;
+      }
+    </style>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModalCenter"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle"
+              >Create new post</h5
+            >
+            <button
+              type="button"
+              class="close btn"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true" style="font-size: 2rem">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body"> ... </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+              >Cancel</button
+            >
+            <button type="button" class="btn btn-primary">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-left: 1rem">
         <a class="navbar-brand" href="#">Navbar</a>
+        <div
+          class="collapse navbar-collapse text-light"
+          id="navbarSupportedContent"
+        >
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row-reverse">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="#"
+                ><i class="ri-home-heart-fill"></i
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"
+                ><i class="ri-search-eye-line"></i
+              ></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="ri-compass-fill"></i></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="ri-chat-1-fill"></i></a>
+            </li>
+            <li class="nav-item">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn p-0"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModalCenter"
+              >
+                <i class="ri-add-line" style="font-size: 2rem"> </i>
+              </button>
+            </li>
+          </ul>
+        </div>
+        <div class="d-flex">
+          <a class="navbar-brand" href="#"
+            ><i class="ri-logout-circle-r-line"></i
+          ></a>
+          <a class="navbar-brand" href="#"><i class="ri-settings-fill"> </i></a>
+        </div>
         <button
           class="navbar-toggler"
           type="button"
@@ -28,47 +138,145 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse text-light"
-          id="navbarSupportedContent"
-        >
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-          </ul>
-          <form class="d-flex" role="search">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button class="btn btn-outline-success" type="submit"
-              >Search</button
-            >
-          </form>
-        </div>
       </div>
     </nav>
-    <div id="main" class="h-100 w-100 px-2">
-      <div class="profileBac"></div>
-      <div class="userData px-3">
-        <div class="avatar">
-          <img
-            src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW9kZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
-            alt=""
-          />
-        </div>
-        <br />
-        <br />
-        <h6 class="m-0 p-0"
-          ><%= userData.firstName %><%= userData.lastName %></h6
+    <div id="main" class="h-100 w-100 d-flex">
+      <div class="userInfo border-end bg-dark text-light">
+        <div
+          class="username border-bottom d-flex justify-content-center align-items-center pt-3 flex-column"
         >
-        <small class="opacity-50 p-0 m-0"> @<%= userData.username %> </small>
+          <div class="avatar mb-2 text-center">
+            <img
+              src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8bW9kZWx8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60"
+              alt=""
+            />
+          </div>
+          <h5 class="m-0">@<%= userData.username %></h5>
+          <small class="m-0 mb-3">
+            <%= userData.firstName %> <%= userData.lastName %></small
+          >
+        </div>
+        <div
+          class="d-flex gap-4 pt-3 text-center justify-content-center align-items-center"
+        >
+          <div class="count">
+            <p class="m-0">post</p>
+            <span class="m-0"><%= userData.posts.length %></span>
+          </div>
+          <div class="count">
+            <p class="m-0">Followers</p>
+            <span class="m-0"><%= userData.posts.length %></span>
+          </div>
+          <div class="count">
+            <p class="m-0">Following</p>
+            <span class="m-0"><%= userData.posts.length %></span>
+          </div>
+        </div>
+        <div class="px-3 py-3 text-center opacity-75 border-bottom">
+          <small
+            >Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur
+            quidem voluptas doloribus eos fuga porro.</small
+          >
+        </div>
+        <div class="activity my-2 p-2">
+          <h5>Recent Activity...</h5>
+        </div>
+      </div>
+      <div class="userData">
+        <div class="post">
+          <h3
+            style="
+              text-align: center;
+              position: sticky;
+              top: 0%;
+              background-color: #fff;
+            "
+            class="pb-1"
+            >Your posts</h3
+          >
+          <div>
+            <img
+              src="https://images.unsplash.com/photo-1530423470967-45b90dca3a4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1101&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1530423470967-45b90dca3a4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1101&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1530423470967-45b90dca3a4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1101&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1530423470967-45b90dca3a4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1101&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1530423470967-45b90dca3a4f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1485178575877-1a13bf489dfe?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1101&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1524638431109-93d95c968f03?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+              alt=""
+            />
+          </div>
+        </div>
       </div>
     </div>
     <script
