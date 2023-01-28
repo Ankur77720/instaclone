@@ -1,0 +1,42 @@
+.feed > div {
+  flex-wrap: wrap;
+  display: flex;
+  padding: 1rem;
+  padding-right: 4.3rem;
+  gap: 1rem;
+}
+.feed .post {
+  overflow: hidden;
+  border-radius: 0.25rem;
+  height: 90vh;
+  box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.551);
+  background-color: rgb(235, 235, 235);
+}
+.feed .postOwner {
+  height: 9vh;
+}
+.feed .postOwner .avatar img {
+  height: 40px;
+  width: 40px !important;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+}
+.feed .postOwner h3,
+.feed .postOwner h4,
+.feed .postOwner h5,
+.feed .postOwner h6,
+.feed .postOwner p {
+  margin: 0px;
+  padding: 0px;
+  line-height: 90%;
+}
+
+.feed .post > img {
+  height: 75%;
+  max-width: 29vw;
+  min-width: 370px;
+  object-position: center;
+  object-fit: cover;
+  cursor: pointer;
+}

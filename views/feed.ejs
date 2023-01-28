@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bootstrap demo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link rel="stylesheet" href="../stylesheets/feed.css" />
+  </head>
+  <body>
+    <%- include('./components/createPost') %> <%- include('./components/navbar')
+    %>
+    <div class="feed">
+      <div>
+        <% posts.forEach(post=>{ %>
+        <div class="d-flex post flex-column">
+          <div
+            class="postOwner d-flex px-2 justify-content-between align-items-center"
+          >
+            <div
+              class="ownerInfo d-flex justify-content-start align-items-center"
+              style="cursor: pointer"
+            >
+              <div class="avatar">
+                <img
+                  src="../uploads/userUploads/<%= post.owner.pic %>"
+                  alt=""
+                />
+              </div>
+              <div class="text ps-2">
+                <!-- <h5> <%= post.owner.firstName %><%= post.owner.lastName %> </h5> -->
+                <h6> @<%= post.owner.username %> </h6>
+              </div>
+            </div>
+            <i class="ri-more-2-fill"></i>
+          </div>
+          <img src="../uploads/postUploads/<%= post.post %>" alt="" />
+          <div class="post-body p-1">
+            <p><%= post.caption %></p>
+          </div>
+        </div>
+        <%}) %>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      window.onunload = function () {
+        localStorage.setItem("scrollPosition", window.scrollY);
+      };
+      window.onload = function () {
+        window.scroll({
+          top: parseInt(localStorage.getItem("scrollPosition")),
+          behavior: "instant",
+        });
+      };
+    </script>
+  </body>
+</html>

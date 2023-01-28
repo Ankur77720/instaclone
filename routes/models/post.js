@@ -1,12 +1,10 @@
 const mongoose = require('mongoose')
 
 let postSchema = mongoose.Schema({
-  owner: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: 'user',
-    },
-  ],
+  owner: {
+    type: mongoose.Types.ObjectId,
+    ref: 'user',
+  },
   likes: [
     {
       type: mongoose.Types.ObjectId,

@@ -16,8 +16,6 @@ function isloggedIn(req, res, next) {
 }
 // isloggedIN
 
-// passport integration and routes and make routes in different files for user,post and comment
-// models are created
 /* GET home page. */
 router.get('/', function (req, res, next) {
   res.locals.error = ''
@@ -88,9 +86,38 @@ router.get('/logout', (req, res, next) => {
 // logout user
 
 // profile
-router.get('/profile', isloggedIn, (req, res, next) => {
-  res.render('profile', { userData: req.user })
+router.get('/profile', isloggedIn, async (req, res, next) => {
+  let currentUser = await user
+    .findOne({ username: req.user.username })
+    .populate('posts')
+  res.render('profile', { userData: currentUser })
 })
 // profile
 
+// Create post
+router.post(
+  '/createPost',
+  isloggedIn,
+  postUpload.single('post'),
+  async (req, res, next) => {
+    var newPost = {
+      owner: req.user._id,
+      caption: req.body.caption,
+      post: req.file.filename,
+    }
+    newPost = await postModel.create(newPost)
+    let currentUser = await user.findOne({ username: req.user.username })
+    currentUser.posts.push(newPost._id)
+    await currentUser.save()
+    res.redirect('back')
+  },
+)
+// Create post
+
+// user feed
+router.get('/feed', isloggedIn, async (req, res, next) => {
+  let posts = await postModel.find().populate('owner')
+  res.render('feed', { posts: posts })
+})
+// user feed
 module.exports = router

@@ -37,7 +37,7 @@
   columns: auto;
   gap: 1rem;
   padding: 0.5rem;
-  justify-content: center;
+  justify-content: start;
   flex-wrap: wrap;
 }
 .post img {
@@ -47,3 +47,10 @@
   box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.551);
   cursor: pointer;
 }
+
+/* create post */
+form textarea {
+  height: 10vh !important;
+  line-height: 90% !important;
+}
+/* create post */

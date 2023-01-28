@@ -1,0 +1,78 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create new post</h5>
+        <button
+          type="button"
+          class="close btn"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true" style="font-size: 2rem">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form
+          id="createPost"
+          action="/createPost"
+          enctype="multipart/form-data"
+          method="post"
+        >
+          <div
+            class="mb-3 d-flex align-items-start justify-content-start gap-1"
+          >
+            <i class="ri-pencil-fill position-absolute ps-1 pt-1"></i>
+            <textarea
+              type="text"
+              id="Caption"
+              class="form-control ps-4"
+              placeholder="Caption for post..."
+              name="caption"
+            ></textarea>
+          </div>
+          <div
+            class="mb-3 d-flex align-items-center justify-content-start gap-1"
+          >
+            <i class="ri-user-2-fill position-absolute ps-1"></i>
+            <input
+              disabled
+              type="text"
+              id="persons"
+              class="disabled form-control ps-4"
+              placeholder="Tag persons"
+              name="persons"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="post" class="form-label"
+              >Select an image to post
+            </label>
+            <input
+              type="file"
+              name="post"
+              id="post"
+              class="form-control text-capitalize"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+          >Cancel</button
+        >
+        <button type="submit" form="createPost" class="btn btn-primary"
+          >Post</button
+        >
+      </div>
+    </div>
+  </div>
+</div>
