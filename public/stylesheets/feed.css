@@ -1,14 +1,51 @@
+#main {
+  display: flex;
+}
+.suggestions {
+  width: 30vw;
+  height: 100vh;
+  position: fixed;
+  top: 0%;
+  z-index: 999;
+}
+.userInfo {
+  height: 100vh;
+  width: 30vw;
+  position: fixed;
+  z-index: 9;
+}
+.suggestions .avatar {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.suggestions .avatar img {
+  border-radius: 50%;
+  height: 92%;
+  width: 92%;
+  object-fit: cover;
+}
+
+.feed {
+  margin-left: 30vw;
+}
 .feed > div {
   flex-wrap: wrap;
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
   padding: 1rem;
   padding-right: 4.3rem;
   gap: 1rem;
 }
 .feed .post {
+  position: relative;
   overflow: hidden;
   border-radius: 0.25rem;
-  height: 90vh;
   box-shadow: 0px 5px 10px 1px rgba(0, 0, 0, 0.551);
   background-color: rgb(235, 235, 235);
 }
@@ -31,12 +68,59 @@
   padding: 0px;
   line-height: 90%;
 }
-
+.feed .post-body {
+  height: 20vh;
+}
 .feed .post > img {
-  height: 75%;
-  max-width: 29vw;
-  min-width: 370px;
+  max-height: 90vh;
+  width: 45vw;
   object-position: center;
   object-fit: cover;
   cursor: pointer;
+}
+.instagram-heart {
+  width: 184px;
+  height: 162px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  background: url("https://imgur.com/rksyGE8.png") no-repeat center/contain;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.like {
+  animation-duration: 1000ms;
+  animation-name: like-heart-animation;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes like-heart-animation {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  15% {
+    opacity: 0.9;
+    transform: scale(1.2);
+  }
+  30% {
+    transform: scale(0.95);
+  }
+  45%,
+  80% {
+    opacity: 0.9;
+    transform: scale(1);
+  }
+}
+.feed input.comment {
+  border: none;
+  background-color: transparent;
+  padding: 0 0.5rem;
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.154);
+  outline: none;
 }

@@ -116,8 +116,29 @@ router.post(
 
 // user feed
 router.get('/feed', isloggedIn, async (req, res, next) => {
-  let posts = await postModel.find().populate('owner')
-  res.render('feed', { posts: posts })
+  let posts = await (await postModel.find().populate('owner')).reverse()
+  res.render('feed', { posts: posts, userData: req.user })
 })
 // user feed
+
+// likePost
+router.get('/like/:postId', isloggedIn, async (req, res, next) => {
+  let currentUser = await user.findOne({ username: req.user.username })
+  let currentPost = await postModel.findOne({ _id: req.params.postId })
+  let index = currentUser.likes.indexOf(req.params.postId)
+  if (index == -1) {
+    currentUser.likes.push(req.params.postId)
+    currentPost.likes.push(currentUser._id)
+    await currentPost.save()
+    await currentUser.save()
+    res.send(true)
+  } else {
+    currentUser.likes.splice(index, 1)
+    currentPost.likes.splice(currentPost.likes.indexOf(currentUser._id), 1)
+    await currentPost.save()
+    await currentUser.save()
+    res.send(false)
+  }
+})
+// likePost
 module.exports = router

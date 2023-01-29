@@ -14,14 +14,23 @@ html::-webkit-scrollbar-thumb {
   margin: 0%;
   padding: 0%;
   box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
+}
+input,
+textarea {
+  -webkit-user-select: none;
+  user-select: initial;
+}
+input::selection,
+textarea::selection {
+  background-color: black;
+  color: white;
 }
 html,
 body {
   height: 100%;
   width: 100%;
-}
-#main {
-  
 }
 .btn-primary {
   background-color: #000;
