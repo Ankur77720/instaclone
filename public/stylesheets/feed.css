@@ -69,7 +69,7 @@
   line-height: 90%;
 }
 .feed .post-body {
-  height: 20vh;
+  min-height: 20vh;
 }
 .feed .post > img {
   max-height: 90vh;
@@ -77,6 +77,9 @@
   object-position: center;
   object-fit: cover;
   cursor: pointer;
+}
+.userAction { 
+  height: 1.7rem;
 }
 .instagram-heart {
   width: 184px;

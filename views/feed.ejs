@@ -51,7 +51,7 @@
                 onclick='follow("<%= post.owner._id %>")'
                 style="cursor: pointer"
               >
-                <% if(userData.followers.indexOf(post.owner._id)==-1){ %>
+                <% if(userData.following.indexOf(post.owner._id)==-1){ %>
                 <button
                   class="follow<%= post.owner._id %> btn btn-outline-success text-capitalize"
                 >
@@ -61,7 +61,7 @@
                 <button
                   class="follow<%= post.owner._id %> btn btn-outline-warning bg-opacity-50 text-opacity-50 text-capitalize"
                 >
-                  Unfollow
+                  Following
                 </button>
                 <% } %>
               </div>
@@ -74,7 +74,7 @@
             />
             <div class="post-body p-1 d-flex flex-column w-100">
               <div
-                class="userAction mb-2 d-flex justify-content-between"
+                class="userAction d-flex justify-content-between"
                 style="font-size: 1.5rem"
               >
                 <div class="like d-flex gap-3">
@@ -97,7 +97,10 @@
                 </div>
                 <i class="ri-book-mark-line"></i>
               </div>
-              <div class="px-2 mb-4 w-100">
+              <small class="px-1 mb-2" style="font-weight: 500">
+                <%= post.likes.length %> likes
+              </small>
+              <div class="px-2 mb-2 w-100">
                 <h6 class="m-0"> @<%= post.owner.username %> </h6>
                 <small><%= post.caption %></small>
                 <div class="my-2 w-100">
@@ -120,10 +123,6 @@
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io();
-    </script>
     <script>
       async function likeIt(postId, element) {
         let res = await fetch(`/like/${postId}`);
@@ -141,10 +140,28 @@
         }
       }
       async function follow(userId) {
-        let res = await fetch(`/follow/${postId}`);
+        let res = await fetch(`/follow/${userId}`);
         res = await res.json();
+
         let followButtons = document.querySelectorAll(`.follow${userId}`);
-        
+        followButtons.forEach((button) => {
+          if (res) {
+            button.classList.remove("btn-outline-success");
+            button.classList.add("btn-outline-warning");
+            button.innerText = "Following";
+          } else {
+            button.classList.add("btn-outline-success");
+            button.classList.remove("btn-outline-warning");
+            button.innerText = "Follow";
+          }
+        });
+        if (res) {
+          document.querySelector("#following").innerText =
+            parseInt(document.querySelector("#following").innerText) + 1;
+        } else {
+          document.querySelector("#following").innerText =
+            parseInt(document.querySelector("#following").innerText) - 1;
+        }
       }
       window.onunload = function () {
         localStorage.setItem("scrollPosition", window.scrollY);

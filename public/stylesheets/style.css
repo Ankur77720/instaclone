@@ -1,7 +1,7 @@
-html::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 0.5vw !important;
 }
-html::-webkit-scrollbar-thumb {
+*::-webkit-scrollbar-thumb {
   width: 0.5vw !important;
   background-color: rgba(0, 0, 0, 0.596);
   border-radius: 10px;

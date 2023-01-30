@@ -1,0 +1,144 @@
+#main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 4.3rem;
+}
+.chats {
+  width: 30vw;
+  height: 90vh;
+  border: 1px solid black;
+  border-right: none;
+  text-align: center;
+  position: relative;
+  overflow: auto;
+}
+.chats > h4 {
+  position: sticky;
+  top: 0%;
+}
+
+.chats .user {
+  cursor: pointer;
+  height: 13vh;
+  justify-content: start;
+  align-items: center;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.chats .user:hover {
+  background-color: rgb(227, 227, 227);
+}
+
+.avatar {
+  position: relative;
+  height: 69px;
+  width: 69px !important;
+  background-color: #fff;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+.avatar img {
+  height: 98%;
+  width: 98% !important;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  position: relative;
+  z-index: 3;
+  border: 2px solid #fff;
+}
+.avatar::after {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  height: 105%;
+  width: 105%;
+  top: 50%;
+  left: 50%;
+  background-clip: border;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    155deg,
+    rgb(255, 94, 0),
+    rgb(255, 255, 255),
+    rgb(0, 161, 0)
+  );
+}
+.message_area {
+  height: 90vh;
+  width: 60vw;
+  border: 1px solid black;
+  position: relative;
+}
+.chatHeader {
+  position: sticky;
+  top: 0%;
+  background-color: #fff;
+}
+.messages {
+  height: 90%;
+  padding: 0.5rem;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding-bottom: 3rem;
+}
+
+.messages .message {
+  max-width: 25vw;
+  padding: 0px 0.3rem;
+  background-color: gray;
+  margin-top: 1rem;
+  margin-bottom: 1.1rem;
+  position: relative;
+}
+.outgoingMessage {
+  float: right;
+  margin-left: auto;
+}
+.messages .message h6 {
+  position: absolute;
+  font-size: 70%;
+  top: -1.2rem;
+  left: -0.4rem;
+}
+
+.typePad {
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  transform: translateY(-90%);
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+}
+.typePad #chatTypePad:focus {
+  outline: 1px solid black;
+}
+.typePad #chatTypePad {
+  padding: 0.6rem;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.484);
+  transform: translate(0%, -10%);
+  height: 3rem;
+  width: 100%;
+  resize: none;
+  border-bottom: none;
+  border-left: none;
+}
+.typePad #chatTypePad::-webkit-scrollbar {
+  display: none;
+}
+.chatHeader .avatar {
+  height: 50px;
+  width: 50px !important;
+}

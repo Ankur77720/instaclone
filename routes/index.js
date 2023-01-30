@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 var db = require('./db/mongoose')
+var chat = require('./models/chat')
 var user = require('./models/users')
 var postModel = require('./models/post')
 var commentModel = require('./models/comment')
@@ -141,4 +142,72 @@ router.get('/like/:postId', isloggedIn, async (req, res, next) => {
   }
 })
 // likePost
+// Follow user
+router.get('/follow/:userId', isloggedIn, async (req, res, next) => {
+  let currentUser = await user
+    .findOne({ username: req.user.username })
+    .populate('chats')
+  let followingUser = await user
+    .findOne({ _id: req.params.userId })
+    .populate('chats')
+  let index = currentUser.following.indexOf(req.params.userId)
+  if (index == -1) {
+    let flag = true
+    currentUser.chats.forEach((elem) => {
+      ;(
+        elem.roomId == currentUser.username > followingUser.username
+          ? `${followingUser.username}${currentUser.username}`
+          : `${currentUser.username}${followingUser.username}`
+      )
+        ? (flag = false)
+        : (flag = true)
+    })
+    if (flag) {
+      let newChat = await chat.create({
+        firstUser: currentUser._id,
+        secondUser: currentUser._id,
+        roomId:
+          currentUser.username > followingUser.username
+            ? `${followingUser.username}${currentUser.username}`
+            : `${currentUser.username}${followingUser.username}`,
+      })
+      console.log(newChat)
+      currentUser.chats.push({ receiverUser: followingUser.username, newChat })
+      followingUser.chats.push({ receiverUser: currentUser.username, newChat })
+    }
+
+    currentUser.following.push(req.params.userId)
+    followingUser.followers.push(currentUser._id)
+    await followingUser.save()
+    await currentUser.save()
+    res.send(true)
+  } else {
+    currentUser.following.splice(index, 1)
+    followingUser.followers.splice(
+      followingUser.followers.indexOf(currentUser._id),
+      1,
+    )
+    await followingUser.save()
+    await currentUser.save()
+    res.send(false)
+  }
+})
+// Follow user
+// chats routes
+router.get('/chats', isloggedIn, async (req, res, next) => {
+  let currentUser = await user
+    .findOne({ username: req.user.username })
+    .populate('following')
+  console.log(currentUser)
+  res.render('chats', { userData: currentUser })
+})
+router.get('/chats/:userId', isloggedIn, async (req, res, next) => {
+  let oppositeUser = await user.findById(req.params.userId)
+  let currentUser = await user
+    .findOne({ username: req.user.username })
+    .populate('following')
+  console.log(currentUser)
+  res.render('chats', { userData: currentUser })
+})
+// chats routes
 module.exports = router
