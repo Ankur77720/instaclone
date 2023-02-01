@@ -68,11 +68,15 @@
     rgb(0, 161, 0)
   );
 }
-.message_area {
+.message_area,
+.message_area_dummy {
   height: 90vh;
   width: 60vw;
   border: 1px solid black;
   position: relative;
+}
+.message_area {
+  display: none;
 }
 .chatHeader {
   position: sticky;
@@ -91,22 +95,55 @@
 
 .messages .message {
   max-width: 25vw;
-  padding: 0px 0.3rem;
-  background-color: gray;
+  padding: 0.5px 0.4rem;
   margin-top: 1rem;
   margin-bottom: 1.1rem;
   position: relative;
+  background: #f09433;
+  background: -moz-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background: -webkit-linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  background: linear-gradient(
+    45deg,
+    #f09433 0%,
+    #e6683c 25%,
+    #dc2743 50%,
+    #cc2366 75%,
+    #bc1888 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
 }
-.outgoingMessage {
+.messages .incomingMessage {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+.messages .outgoingMessage {
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 10px;
   float: right;
   margin-left: auto;
 }
-.messages .message h6 {
+/* .messages .message h6 {
   position: absolute;
   font-size: 70%;
   top: -1.2rem;
   left: -0.4rem;
-}
+} */
 
 .typePad {
   width: 100%;

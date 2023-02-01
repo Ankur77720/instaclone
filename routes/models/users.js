@@ -48,12 +48,10 @@ let userSchema = mongoose.Schema({
       ref: 'user',
     },
   ],
-  chats: [
-    {
-      type: Array,
-      default: [],  
-    },
-  ],
+  chats: {
+    type: Map,
+    of: Object
+  },
   pic: String,
 })
 userSchema.plugin(passportLocalMongoose)

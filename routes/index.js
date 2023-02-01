@@ -33,11 +33,13 @@ router.post('/register', userUpload.single('pic'), (req, res, next) => {
       lastName: req.body.lastName,
       dob: req.body.dob,
       pic: req.file.filename,
+      chats: { userZero: {} },
       //user data here
     }
     user
       .register(newUser, req.body.password)
-      .then((result) => {
+      .then(async (result) => {
+        await result.save()
         passport.authenticate('local')(req, res, () => {
           //destination after user register
           res.redirect('/profile')
@@ -152,34 +154,23 @@ router.get('/follow/:userId', isloggedIn, async (req, res, next) => {
     .populate('chats')
   let index = currentUser.following.indexOf(req.params.userId)
   if (index == -1) {
-    let flag = true
-    currentUser.chats.forEach((elem) => {
-      ;(
-        elem.roomId == currentUser.username > followingUser.username
-          ? `${followingUser.username}${currentUser.username}`
-          : `${currentUser.username}${followingUser.username}`
-      )
-        ? (flag = false)
-        : (flag = true)
-    })
-    if (flag) {
+    if (currentUser.chats[followingUser.username] == undefined) {
       let newChat = await chat.create({
         firstUser: currentUser._id,
-        secondUser: currentUser._id,
+        secondUser: followingUser._id,
         roomId:
           currentUser.username > followingUser.username
             ? `${followingUser.username}${currentUser.username}`
             : `${currentUser.username}${followingUser.username}`,
       })
-      console.log(newChat)
-      currentUser.chats.push({ receiverUser: followingUser.username, newChat })
-      followingUser.chats.push({ receiverUser: currentUser.username, newChat })
+      currentUser.chats.set(followingUser.username, newChat)
+      followingUser.chats.set(currentUser.username, newChat)
     }
-
     currentUser.following.push(req.params.userId)
     followingUser.followers.push(currentUser._id)
     await followingUser.save()
     await currentUser.save()
+    currentUser = await user.findOne({ username: currentUser.username })
     res.send(true)
   } else {
     currentUser.following.splice(index, 1)
@@ -198,7 +189,6 @@ router.get('/chats', isloggedIn, async (req, res, next) => {
   let currentUser = await user
     .findOne({ username: req.user.username })
     .populate('following')
-  console.log(currentUser)
   res.render('chats', { userData: currentUser })
 })
 router.get('/chats/:userId', isloggedIn, async (req, res, next) => {
@@ -206,7 +196,6 @@ router.get('/chats/:userId', isloggedIn, async (req, res, next) => {
   let currentUser = await user
     .findOne({ username: req.user.username })
     .populate('following')
-  console.log(currentUser)
   res.render('chats', { userData: currentUser })
 })
 // chats routes

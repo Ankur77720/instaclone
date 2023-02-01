@@ -23,7 +23,10 @@
       <div class="chats">
         <h4 class="bg-light py-2">Your chats</h4>
         <% userData.following.forEach(userChat=>{ %>
-        <div class="user d-flex gap-2 px-2 mb-2">
+        <div
+          onclick='openNewChat("<%= userChat.username %>","<%= userChat.pic %>","<%= userChat.username %>")'
+          class="user d-flex gap-2 px-2 mb-2"
+        >
           <div class="avatar">
             <img
               src="../uploads/userUploads/<%= userChat.pic %>"
@@ -46,14 +49,8 @@
         <div
           class="chatHeader border-bottom d-flex gap-2 px-4 py-1 align-items-center"
         >
-          <div class="avatar">
-            <img
-              src="../uploads/userUploads/<%= userData.pic %>"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <h5> <%= userData.firstName %> <%= userData.lastName %> </h5>
+          <div class="avatar"> </div>
+          <h5></h5>
         </div>
         <div class="messages"> </div>
         <div class="typePad">
@@ -62,6 +59,57 @@
             class="m-0"
             id="chatTypePad"
           ></textarea>
+        </div>
+      </div>
+      <div
+        id="message_dummy"
+        class="message_area_dummy d-flex justify-content-center align-items-center"
+      >
+        <div
+          class="d-flex justify-content-center align-content-center flex-column text-center text-capitalize"
+        >
+          <div>
+            <svg
+              aria-label="Direct"
+              class="_ab6-"
+              color="#262626"
+              fill="#262626"
+              height="96"
+              role="img"
+              viewBox="0 0 96 96"
+              width="96"
+            >
+              <circle
+                cx="48"
+                cy="48"
+                fill="none"
+                r="47"
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></circle>
+              <line
+                fill="none"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="2"
+                x1="69.286"
+                x2="41.447"
+                y1="33.21"
+                y2="48.804"
+              ></line>
+              <polygon
+                fill="none"
+                points="47.254 73.123 71.376 31.998 24.546 32.002 41.448 48.805 47.254 73.123"
+                stroke="currentColor"
+                stroke-linejoin="round"
+                stroke-width="2"
+              ></polygon>
+            </svg>
+          </div>
+          <p class="fw-semibold m-0">Send Messages</p>
+          <p>Send private photos and messages to a friend or group.</p>
         </div>
       </div>
     </div>
@@ -73,8 +121,61 @@
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
+      let currentRoom;
+      let currentUserChats = JSON.parse(`<%-JSON.stringify(userData.chats)%>`);
       var userName = "<%= userData.username %>";
+      let openedChat;
+      socket.emit("login", userName);
+
       let messageElement = document.querySelector("#chatTypePad");
+      // Open new chat
+      function openNewChat(username, pic, usName) {
+        document.querySelector(".message_area").style.display = "initial";
+        try {
+          document
+            .querySelector("#main")
+            .removeChild(document.querySelector("#message_dummy"));
+        } catch (err) {}
+        // console.log(document.querySelector(".message_area_dummy"));
+        document.querySelector(".messages").innerHTML = "";
+        document.querySelector(".message_area .avatar").innerHTML = `<img
+              src=../uploads/userUploads/${pic}
+              alt=""
+              srcset=""
+            />`;
+        document.querySelector(".message_area h5").innerText = `${usName}`;
+        openedChat = currentUserChats[username];
+        currentRoom = openedChat.roomId;
+        openedChat.chats.forEach((msg) => {
+          console.log(msg.from, username);
+          if (msg.from == userName) {
+            addNewMessage(
+              { user: msg.from, message: msg.msg },
+              "outgoingMessage"
+            );
+          } else {
+            addNewMessage(
+              { user: msg.from, message: msg.msg },
+              "incomingMessage"
+            );
+          }
+        });
+        socket.emit("joinPrivateRoom", currentRoom);
+        socket.emit("joinPrivateRoomOpposite", {
+          username: openedChat.receiverUser,
+          roomId: currentRoom,
+        });
+      }
+      // Open new chat
+
+      // joined by server request
+      socket.on("joinPrivateRoom", (roomId) => {
+        currentRoom = roomId;
+        socket.emit("joinPrivateRoom", currentRoom);
+      });
+      // joined by server request
+
+      // listen to message Field
       messageElement.addEventListener("keyup", (e) => {
         let value = `${e.target.value}`;
         if (e.key == "Enter") {
@@ -82,18 +183,27 @@
           let msg = {
             user: userName,
             message: value,
+            to: document.querySelector(".message_area h5").innerText,
           };
-          socket.emit("message", msg);
+          // sending message to opposite user
+          console.log(msg);
+          socket.emit("message", { msg: msg, roomId: currentRoom });
+          // sending message to opposite user
           addNewMessage(msg, "outgoingMessage");
           e.target.value = "";
         }
       });
+      // listen to message Field
+
+      // listening to incoming  message
       socket.on("message", (msg) => {
         addNewMessage(msg, "incomingMessage");
       });
+      // listening to incoming  message
+
       function addNewMessage(msg, type) {
         let message = document.createElement("div");
-        msg = `<h6>${msg.user}</h6> <p class='p-0 m-0' > ${msg.message} </p> `;
+        msg = `<p class='p-0 m-0' > ${msg.message} </p> `;
         message.innerHTML = msg;
         message.classList.add("message", type);
         document.querySelector(".messages").appendChild(message);
