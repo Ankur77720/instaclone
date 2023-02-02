@@ -98,7 +98,8 @@
                 <i class="ri-book-mark-line"></i>
               </div>
               <small class="px-1 mb-2" style="font-weight: 500">
-                <%= post.likes.length %> likes
+                <span id="likes"> <%= post.likes.length %> </span>
+                likes
               </small>
               <div class="px-2 mb-2 w-100">
                 <h6 class="m-0"> @<%= post.owner.username %> </h6>
@@ -124,45 +125,6 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      async function likeIt(postId, element) {
-        let res = await fetch(`/like/${postId}`);
-        res = await res.json();
-        let id = element;
-        element = document.querySelector("#" + "i" + element);
-        if (res) {
-          element.classList.remove("ri-heart-3-line");
-          element.classList.add("ri-heart-3-fill", "text-danger");
-          document.querySelector(`#like${id}`).classList.add("like");
-        } else {
-          element.classList.add("ri-heart-3-line");
-          element.classList.remove("ri-heart-3-fill", "text-danger");
-          document.querySelector(`#like${id}`).classList.remove("like");
-        }
-      }
-      async function follow(userId) {
-        let res = await fetch(`/follow/${userId}`);
-        res = await res.json();
-
-        let followButtons = document.querySelectorAll(`.follow${userId}`);
-        followButtons.forEach((button) => {
-          if (res) {
-            button.classList.remove("btn-outline-success");
-            button.classList.add("btn-outline-warning");
-            button.innerText = "Following";
-          } else {
-            button.classList.add("btn-outline-success");
-            button.classList.remove("btn-outline-warning");
-            button.innerText = "Follow";
-          }
-        });
-        if (res) {
-          document.querySelector("#following").innerText =
-            parseInt(document.querySelector("#following").innerText) + 1;
-        } else {
-          document.querySelector("#following").innerText =
-            parseInt(document.querySelector("#following").innerText) - 1;
-        }
-      }
       window.onunload = function () {
         localStorage.setItem("scrollPosition", window.scrollY);
       };
@@ -173,5 +135,6 @@
         });
       };
     </script>
+    <script src="../javascripts/feed.js"></script>
   </body>
 </html>

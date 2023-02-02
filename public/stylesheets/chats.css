@@ -95,6 +95,7 @@
 
 .messages .message {
   max-width: 25vw;
+  width: fit-content;
   padding: 0.5px 0.4rem;
   margin-top: 1rem;
   margin-bottom: 1.1rem;
