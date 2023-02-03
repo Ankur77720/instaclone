@@ -29,9 +29,8 @@ router.post('/register', userUpload.single('pic'), (req, res, next) => {
     var newUser = {
       //user data here
       username: req.body.username,
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      dob: req.body.dob,
+      firstName: '',
+      lastName: '',
       pic: req.file.filename,
       chats: { userZero: {} },
       //user data here

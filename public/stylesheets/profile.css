@@ -1,3 +1,7 @@
+#main {
+  display: flex;
+}
+
 .userInfo {
   height: 100vh;
   width: 25vw;
@@ -54,3 +58,4 @@ form textarea {
   line-height: 90% !important;
 }
 /* create post */
+

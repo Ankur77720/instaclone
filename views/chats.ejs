@@ -16,15 +16,17 @@
     />
     <link rel="stylesheet" href="../stylesheets/style.css" />
     <link rel="stylesheet" href="../stylesheets/chats.css" />
+    <link rel="stylesheet" href="../stylesheets/responsive.css" />
   </head>
   <body>
     <%- include('./components/navbar') %>
-    <div id="main" class="p-5 d-flex">
+    <div id="main">
       <div class="chats">
         <h4 class="bg-light py-2">Your chats</h4>
-        <% userData.following.forEach(userChat=>{ %>
+        <% userData.following.forEach((userChat,index)=>{ %>
         <div
-          onclick='openNewChat("<%= userChat.username %>","<%= userChat.pic %>","<%= userChat.username %>")'
+          id="user<%= index %>"
+          onclick='openNewChat("<%= userChat.username %>","<%= userChat.pic %>","<%= userChat.username %>","<%= index %>")'
           class="user d-flex gap-2 px-2 mb-2"
         >
           <div class="avatar">
@@ -49,6 +51,11 @@
         <div
           class="chatHeader border-bottom d-flex gap-2 px-4 py-1 align-items-center"
         >
+          <i
+            class="ri-arrow-left-line tbn"
+            style="font-size: 1.5rem"
+            onclick="backToChats()"
+          ></i>
           <div class="avatar"> </div>
           <h5></h5>
         </div>
@@ -59,6 +66,9 @@
             class="m-0"
             id="chatTypePad"
           ></textarea>
+          <button onclick="sendMessage()" class="btn"
+            ><i class="ri-send-plane-2-fill"></i
+          ></button>
         </div>
       </div>
       <div
@@ -120,6 +130,13 @@
     ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      function backToChats() {
+        if (window.innerWidth <= 500) {
+          document.querySelector(".chats").style.display = "inline-block";
+          document.querySelector(".message_area").style.display = "none";
+          document.querySelector(".navbar").style.display = "inline-block";
+        }
+      }
       var socket = io();
       let currentRoom;
       let currentUserChats = JSON.parse(`<%-JSON.stringify(userData.chats)%>`);
@@ -129,8 +146,18 @@
 
       let messageElement = document.querySelector("#chatTypePad");
       // Open new chat
-      function openNewChat(username, pic, usName) {
-        document.querySelector(".message_area").style.display = "initial";
+      function openNewChat(username, pic, usName, index) {
+        document.querySelectorAll(".user").forEach((elem) => {
+          elem.style.backgroundColor = "#fff";
+        });
+        if (window.innerWidth <= 500) {
+          document.querySelector(".chats").style.display = "none";
+          document.querySelector(".navbar").style.display = "none";
+        }
+        console.log(document.querySelector(`#user${index}`));
+        document.querySelector(`#user${index}`).style.backgroundColor =
+          "#d0d0d0";
+        document.querySelector(".message_area").style.display = "inline-block";
         try {
           document
             .querySelector("#main")
@@ -175,22 +202,27 @@
       });
       // joined by server request
 
+      function sendMessage() {
+        let value = `${document.querySelector("#chatTypePad").value}`.replace(
+          /\r?\n/g,
+          " "
+        );
+        // value = value.slice(0, value.indexOf("\n") + 1);
+        let msg = {
+          user: userName,
+          message: value,
+          to: document.querySelector(".message_area h5").innerText,
+        };
+        // sending message to opposite user
+        socket.emit("message", { msg: msg, roomId: currentRoom });
+        // sending message to opposite user
+        addNewMessage(msg, "outgoingMessage");
+        document.querySelector("#chatTypePad").value = "";
+      }
       // listen to message Field
       messageElement.addEventListener("keyup", (e) => {
-        let value = `${e.target.value}`;
         if (e.key == "Enter") {
-          value = value.slice(0, value.indexOf("\n"));
-          let msg = {
-            user: userName,
-            message: value,
-            to: document.querySelector(".message_area h5").innerText,
-          };
-          // sending message to opposite user
-          console.log(msg);
-          socket.emit("message", { msg: msg, roomId: currentRoom });
-          // sending message to opposite user
-          addNewMessage(msg, "outgoingMessage");
-          e.target.value = "";
+          sendMessage();
         }
       });
       // listen to message Field

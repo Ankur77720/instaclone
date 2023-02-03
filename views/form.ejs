@@ -15,45 +15,27 @@
   <body>
     <div id="main">
       <div class="formBac">
-        <div class="rounded-5 overflow-hidden mx-1 formCover">
+        <div class="overflow-hidden formCover">
           <form
             method="post"
             enctype="multipart/form-data"
             action="/register"
-            class="form col-12 p-4 d-flex flex-column justify-content-center align-items-start"
+            class="form col-12 p-4 d-flex flex-column justify-content-center align-items-center"
           >
-            <span class="mb-4" style="font-size: 2rem; font-weight: 300"
+            <div class="col-12 d-flex justify-content-center">
+              <img
+                style="height: 75px; object-fit: cover; width: 270px"
+                src="../images/logo/svg/logo-black.svg"
+                alt=""
+                class="bg-dark"
+              />
+            </div>
+            <span class="mb-4" style="font-size: 1rem; font-weight: 400"
               >Register new account</span
             >
             <h6 class="text-danger text-capitalize mb-2"> <%= error %> </h6>
-            <div class="row name">
-              <div class="mb-3 col-6">
-                <label for="firstName" class="form-label"
-                  >Enter First Name</label
-                >
-                <input
-                  required
-                  name="firstName"
-                  type="text"
-                  id="firstName"
-                  class="form-control"
-                  placeholder="Example Ankur "
-                />
-              </div>
-              <div class="mb-3 col-6">
-                <label for="lastName" class="form-label">Enter Last Name</label>
-                <input
-                  required
-                  name="lastName"
-                  type="text"
-                  id="lastName"
-                  class="form-control"
-                  placeholder="Example Prajapati"
-                />
-              </div>
-            </div>
             <div class="row">
-              <div class="mb-3 col-8">
+              <div class="mb-3">
                 <label for="username" class="form-label">Enter username</label>
                 <input
                   required
@@ -62,18 +44,6 @@
                   id="username"
                   class="form-control"
                   placeholder="Example @ankur "
-                />
-              </div>
-              <div class="mb-3 col-4">
-                <label for="username" class="form-label"
-                  >Enter Date of Birth</label
-                >
-                <input
-                  required
-                  name="dob"
-                  type="date"
-                  id="dob"
-                  class="form-control"
                 />
               </div>
             </div>
@@ -92,8 +62,8 @@
                 />
               </div>
             </div>
-            <div class="row align-items-end">
-              <div class="mb-3 col-7">
+            <div class="row">
+              <div class="mb-3">
                 <label for="password" class="form-label"
                   >Enter your password</label
                 >
@@ -106,21 +76,21 @@
                   placeholder="********************** "
                 />
               </div>
-              <div class="mb-3 col-5">
+              <div class="mb-3">
                 <input
                   required
                   type="submit"
-                  class="btn btn-outline-success w-100"
+                  class="btn btn-success"
                   value="create account"
                 />
               </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 text-center">
               <span
                 >Already have an account ?
                 <a
                   class="px-1"
-                  style="opacity: 0.75; color: rgb(255, 255, 255)"
+                  style="opacity: 0.75; color: rgb(0, 0, 0)"
                   href="/login"
                   >Login here</a
                 ></span
