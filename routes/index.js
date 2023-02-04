@@ -17,46 +17,59 @@ function isloggedIn(req, res, next) {
 }
 // isloggedIN
 
+// isAlreadyLogin
+function isAlreadyLogin(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.redirect('/profile')
+  } else return next()
+}
+// isAlreadyLogin
+
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', isAlreadyLogin, function (req, res, next) {
   res.locals.error = ''
   res.render('form')
 })
 
 // Register user
-router.post('/register', userUpload.single('pic'), (req, res, next) => {
-  try {
-    var newUser = {
-      //user data here
-      username: req.body.username,
-      firstName: '',
-      lastName: '',
-      pic: req.file.filename,
-      chats: { userZero: {} },
-      //user data here
-    }
-    user
-      .register(newUser, req.body.password)
-      .then(async (result) => {
-        await result.save()
-        passport.authenticate('local')(req, res, () => {
-          //destination after user register
-          res.redirect('/profile')
+router.post(
+  '/register',
+  isAlreadyLogin,
+  userUpload.single('pic'),
+  (req, res, next) => {
+    try {
+      var newUser = {
+        //user data here
+        username: req.body.username,
+        firstName: '',
+        lastName: '',
+        pic: req.file.filename,
+        chats: { userZero: {} },
+        //user data here
+      }
+      user
+        .register(newUser, req.body.password)
+        .then(async (result) => {
+          await result.save()
+          passport.authenticate('local')(req, res, () => {
+            //destination after user register
+            res.redirect('/profile')
+          })
         })
-      })
-      .catch((err) => {
-        res.locals.error = `${err.message}!`
-        res.render('form')
-      })
-  } catch (err) {
-    res.locals.error = `${err.message}!`
-    res.render('form')
-  }
-})
+        .catch((err) => {
+          res.locals.error = `${err.message}!`
+          res.render('form')
+        })
+    } catch (err) {
+      res.locals.error = `${err.message}!`
+      res.render('form')
+    }
+  },
+)
 // Register user
 
 // Login user
-router.get('/login', (req, res, next) => {
+router.get('/login', isAlreadyLogin, (req, res, next) => {
   res.locals.error = ''
   res.render('login')
 })

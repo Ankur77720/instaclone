@@ -38,11 +38,10 @@
   flex-wrap: wrap;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   padding: 1rem;
   padding-right: 4.3rem;
   gap: 1rem;
-  flex-direction: column;
   width: 70vw;
 }
 .feed .post {
@@ -72,7 +71,9 @@
   line-height: 90%;
 }
 .feed .post-body {
-  min-height: 20vh;
+  height: 15vh;
+  min-height: 120px;
+  max-height: 200px;
 }
 .feed .post > img {
   max-height: 90vh;

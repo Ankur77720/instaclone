@@ -99,19 +99,26 @@
                 <i class="ri-book-mark-line"></i>
               </div>
               <small class="px-1 mb-2" style="font-weight: 500">
-                <span id="likes"> <%= post.likes.length %> </span>
+                <span id="likes<%= index %>"> <%= post.likes.length %> </span>
                 likes
               </small>
               <div class="px-2 mb-2 w-100">
                 <h6 class="m-0"> @<%= post.owner.username %> </h6>
                 <small><%= post.caption %></small>
-                <div class="my-2 w-100">
-                  <input
-                    class="comment w-100"
-                    type="text"
-                    placeholder="Add a comment"
-                  />
-                </div>
+                <!-- <div class="my-2 w-100">
+                  <form
+                    onsubmit="comment(event)"
+                    method="post"
+                    action="./comment/<%= post._id %>"
+                  >
+                    <input
+                      name="data"
+                      class="comment w-100"
+                      type="text"
+                      placeholder="Add a comment"
+                    />
+                  </form>
+                </div> -->
               </div>
             </div>
           </div>
@@ -128,6 +135,11 @@
       crossorigin="anonymous"
     ></script>
     <script>
+      async function comment(event) {
+        event.preventDefault();
+        var action = event.target["action"];
+        var value = event.target.children[0].value;
+      }
       window.onunload = function () {
         localStorage.setItem("scrollPosition", window.scrollY);
       };
