@@ -156,6 +156,7 @@ router.get('/like/:postId', isloggedIn, async (req, res, next) => {
   }
 })
 // likePost
+
 // Follow user
 router.get('/follow/:userId', isloggedIn, async (req, res, next) => {
   let currentUser = await user
@@ -196,6 +197,7 @@ router.get('/follow/:userId', isloggedIn, async (req, res, next) => {
   }
 })
 // Follow user
+
 // chats routes
 router.get('/chats', isloggedIn, async (req, res, next) => {
   let currentUser = await user
@@ -211,4 +213,17 @@ router.get('/chats/:userId', isloggedIn, async (req, res, next) => {
   res.render('chats', { userData: currentUser })
 })
 // chats routes
+
+// search Users
+router.post('/searchUser', async (req, res, next) => {
+  let userSubString = req.body.search
+  let matches = await user.find({
+    username: {
+      $regex: new RegExp(userSubString, 'i'),
+      $ne: req.user.username,
+    },
+  })
+  res.send(matches)
+})
+// search Users
 module.exports = router

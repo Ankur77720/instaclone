@@ -123,6 +123,11 @@
     transform: scale(1);
   }
 }
+.btn:active,
+.btn:focus {
+  outline: none !important;
+  box-shadow: none;
+}
 .feed input.comment {
   border: none;
   background-color: transparent;

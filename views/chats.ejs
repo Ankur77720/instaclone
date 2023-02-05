@@ -22,12 +22,28 @@
     <%- include('./components/navbar') %>
     <div id="main">
       <div class="chats">
-        <h4 class="bg-light py-2">Your chats</h4>
+        <div
+          class="w-100 d-flex flex-column px-1 py-2 border-bottom justify-content-between"
+        >
+          <input
+            class="col-7 form-control"
+            style="width: -webkit-fill-available"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            oninput="searchUser(event)"
+          />
+          <div
+            class="matchedUsers flex-columnborder w-100"
+            style="display: none"
+          ></div>
+        </div>
         <% userData.following.forEach((userChat,index)=>{ %>
         <div
           id="user<%= index %>"
           onclick='openNewChat("<%= userChat.username %>","<%= userChat.pic %>","<%= userChat.username %>","<%= index %>")'
-          class="user d-flex gap-2 px-2 mb-2"
+          style="display: flex"
+          class="user gap-2 px-2 mb-2"
         >
           <div class="avatar">
             <img
@@ -124,12 +140,90 @@
       </div>
     </div>
     <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.2/axios.min.js"
+      integrity="sha512-NCiXRSV460cHD9ClGDrTbTaw0muWUBf/zB/yLzJavRsPNUl9ODkUVmUHsZtKu17XknhsGlmyVoJxLg/ZQQEeGA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
       crossorigin="anonymous"
     ></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
+      async function follow(userId) {
+        let res = await fetch(`/follow/${userId}`);
+        res = await res.json();
+
+        let followButtons = document.querySelectorAll(`.follow${userId}`);
+        console.log(followButtons);
+        followButtons.forEach((button) => {
+          if (res) {
+            button.classList.remove("btn-outline-success");
+            button.classList.add("btn-outline-warning");
+            button.innerText = "Following";
+          } else {
+            button.classList.add("btn-outline-success");
+            button.classList.remove("btn-outline-warning");
+            button.innerText = "Follow";
+          }
+        });
+      }
+      let userData = JSON.parse(`<%-JSON.stringify(userData)%>`);
+      async function searchUser(event) {
+        if (event.target.value.trim().length > 0) {
+          document.querySelectorAll(".user").forEach((elem) => {
+            elem.style.display = "none";
+          });
+          document.querySelector(".matchedUsers").style.display =
+            "inline-block";
+          let matches = await axios.post("/searchUser", {
+            search: event.target.value,
+          });
+          matches = matches.data;
+          let clutter = "";
+          matches.forEach((match) => {
+            let flag = true;
+            userData.following.forEach((elem) => {
+              if (elem._id == match._id) {
+                flag = false;
+              }
+            });
+            clutter +=
+              `<div class="user d-flex gap-2 px-2 mb-2 justify-content-between">
+        <div class='d-flex gap-1' > <div class="avatar">
+          <img src="../uploads/userUploads/${match.pic}" alt="" srcset="" />
+        </div>
+        <div class="text-start align-items-start d-flex flex-column h-100 py-3">
+          <h6 class="m-0"></h6>
+          <small> @${match.username}</small>
+        </div> </div>
+        <div onclick='follow("${match._id}")' style="cursor: pointer">
+          ` +
+              (flag
+                ? `
+          <button class="follow${match._id} btn btn-outline-success text-capitalize">
+            follow
+          </button>
+          `
+                : `
+          <button class="follow${match._id} btn btn-outline-warning bg-opacity-50 text-opacity-50 text-capitalize">
+            Following
+          </button>
+
+      `) +
+              `</div>
+      </div>`;
+          });
+          document.querySelector(".matchedUsers").innerHTML = clutter;
+        } else {
+          document.querySelectorAll(".user").forEach((elem) => {
+            elem.style.display = "flex";
+          });
+          document.querySelector(".matchedUsers").style.display = "none";
+        }
+      }
       function backToChats() {
         if (window.innerWidth <= 500) {
           document.querySelector(".chats").style.display = "inline-block";
@@ -154,7 +248,6 @@
           document.querySelector(".chats").style.display = "none";
           document.querySelector(".navbar").style.display = "none";
         }
-        console.log(document.querySelector(`#user${index}`));
         document.querySelector(`#user${index}`).style.backgroundColor =
           "#d0d0d0";
         document.querySelector(".message_area").style.display = "inline-block";
@@ -163,13 +256,12 @@
             .querySelector("#main")
             .removeChild(document.querySelector("#message_dummy"));
         } catch (err) {}
-        // console.log(document.querySelector(".message_area_dummy"));
         document.querySelector(".messages").innerHTML = "";
         document.querySelector(".message_area .avatar").innerHTML = `<img
-              src=../uploads/userUploads/${pic}
-              alt=""
-              srcset=""
-            />`;
+                    src=../uploads/userUploads/${pic}
+                    alt=""
+                    srcset=""
+                  />`;
         document.querySelector(".message_area h5").innerText = `${usName}`;
         openedChat = currentUserChats[username];
         currentRoom = openedChat.roomId;

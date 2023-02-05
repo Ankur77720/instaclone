@@ -93,7 +93,16 @@
                     ></i>
                     <% } %>
                   </a>
-                  <i class="ri-chat-4-line"></i>
+                  <!-- Button trigger modal -->
+                  <button
+                    type="button"
+                    class="btn p-0 m-0 text-center"
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop<%= index %>"
+                  >
+                    <i class="ri-chat-4-line" style="font-size: 1.5rem"></i>
+                  </button>
+                  <!-- Button trigger modal -->
                   <i class="ri-share-circle-line"></i>
                 </div>
                 <i class="ri-book-mark-line"></i>
@@ -105,20 +114,35 @@
               <div class="px-2 mb-2 w-100">
                 <h6 class="m-0"> @<%= post.owner.username %> </h6>
                 <small><%= post.caption %></small>
-                <!-- <div class="my-2 w-100">
-                  <form
-                    onsubmit="comment(event)"
-                    method="post"
-                    action="./comment/<%= post._id %>"
-                  >
-                    <input
-                      name="data"
-                      class="comment w-100"
-                      type="text"
-                      placeholder="Add a comment"
-                    />
-                  </form>
-                </div> -->
+
+                <!-- Modal -->
+                <div
+                  class="modal fade"
+                  id="staticBackdrop<%= index %>"
+                  data-bs-backdrop="static"
+                  data-bs-keyboard="false"
+                  tabindex="-1"
+                  aria-labelledby="staticBackdropLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header p-0" style="height: 0; width: 0">
+                        <div
+                          style="position: absolute; top: 0.5rem; right: 1rem"
+                        >
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          ></button>
+                        </div>
+                      </div>
+                      <div class="modal-body"> </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

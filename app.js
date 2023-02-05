@@ -19,7 +19,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: 'sara rasra',
-  }),
+  })
 )
 app.use(passport.initialize())
 app.use(passport.session())
